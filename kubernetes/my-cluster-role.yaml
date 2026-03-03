@@ -1,0 +1,32 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2026-02-24T16:18:13Z"
+  name: cluster-role-custom
+  resourceVersion: "991"
+  uid: 9b9bb321-2465-4b06-9635-0e88f008cb03
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - watch
+  - list
+
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRoleBinding
+# metadata:
+#   creationTimestamp: "2026-02-24T16:21:19Z"
+#   name: cluster-bind
+#   resourceVersion: "1046"
+#   uid: 06a62722-5734-4b85-a5eb-be84d7aceb13
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: cluster-role-custom
+# subjects:
+# - apiGroup: rbac.authorization.k8s.io
+#   kind: User
+#   name: michelle

@@ -1,0 +1,35 @@
+# this is to check the app is actually ready to get handle the ttraffic
+# for livenessProbe it will be healthy instead of ready
+
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: my-app-pod 
+  labels: 
+    app: myapp 
+    type: front-end 
+spec: 
+   containers: 
+      - name: nginx-container 
+        image: nginx
+        ports:
+          - containterPort: 8080
+        readinessProbe:
+           httpGet:
+             path: /api/ready
+             port: 8080
+           initialDelaySeconds: 10
+           periodSeconds: 5
+           failureThreshold: 8
+
+# for tcp check
+# readinessProbe:
+#            tcpSocket:
+#              port: 3306
+
+# for execute check
+# readinessProbe:
+#            exec:
+#              command:
+#                 - cat
+#                 - /app/is_ready

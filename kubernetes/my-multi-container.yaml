@@ -1,0 +1,44 @@
+# 3 types od multi-container
+# co-located container (they are created and destroyed together AT THE SAME TIME)
+# regular init-container (first the initialising container runs like checking if db is up or not 
+# then after its job is done then the actual pod will start)
+# side-car container (same like init container THE SIDE CAR CONTAINER STARTS FIRST but here the 
+# side car container wont stop but it will be running at all the times exmple logging of sort)
+
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: my-app-pod 
+  labels: 
+    app: myapp 
+    type: front-end 
+spec: # co-located container
+   containers: 
+      - name: web-app 
+        image: web-app
+      - name: main-app
+        image: main-app
+
+#  init-containers
+# spec: 
+#    containers: 
+#       - name: web-app 
+#         image: web-app
+#    initContainers:
+#    - name: db-check
+#      image: busybox
+#      command: 'wait-for-db-to-start.sh'
+#     - name: api-check
+#      image: busybox
+#      command: 'wait-for-api-to-start.sh'
+
+# side-car
+# spec: 
+#    containers: 
+#       - name: web-app 
+#         image: web-app
+#    initContainers:
+#    - name: log-monitor
+#      image: busybox
+#      command: 'set-up-log-shipper.sh'
+#      restartPolicy: Always

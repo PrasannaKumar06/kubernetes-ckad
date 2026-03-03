@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: dev
+spec:
+  hard:
+   pods: "10"
+   requests.cpu: "1"
+   requests.memory: "1Gi"
+   limits.cpu: "2"
+   limits.memory: "2Gi"
+
+  #  this will limt the creation of pods to 10 in dev namspace and also it requests for 1 cpu and 1Gi mem and limits it to 2 and 2Gi

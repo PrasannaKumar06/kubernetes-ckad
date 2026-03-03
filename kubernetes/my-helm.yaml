@@ -1,0 +1,7 @@
+# helm install release-name image-name
+# helm list
+# helm uninstall release-name
+# helm pull --untar image-name
+# helm search hub wordpress
+# helm search repo joomia
+# helm repo list

@@ -1,0 +1,40 @@
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: my-app-pod 
+  labels: 
+    app: myapp 
+    type: front-end 
+spec: 
+   containers: 
+      - name: nginx-container 
+        image: nginx
+   affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: size
+            operator: In
+            values:
+            - Large   
+
+# if we want the pods to be either run in large or medium node
+# - matchExpressions:
+#           - key: size
+#             operator: In
+#             values:
+#             - Large
+#             - Medium
+
+# if we want the pod to run in any node which is not small
+# - matchExpressions:
+#           - key: size
+#             operator: NotIn
+#             values:
+#             - Small   
+
+# if the label is there in the node then it will assingn the pod
+# - matchExpressions:
+#           - key: size
+#             operator: Exists  

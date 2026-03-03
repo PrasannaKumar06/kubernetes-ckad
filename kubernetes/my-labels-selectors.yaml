@@ -1,0 +1,25 @@
+apiVersion: apps/v1 
+kind: ReplicaSet 
+metadata: 
+  name: frontend 
+  labels: 
+    app: myRC 
+    tier: frontend
+annotations:
+   buildversion: 3.14
+spec: 
+  replicas: 3 
+  selector: 
+    matchLabels: 
+      tier: frontend 
+  template: 
+    metadata: 
+      labels: 
+        tier: frontend 
+    spec: 
+      containers: 
+      - name: nfinx-app 
+        image: nginx
+
+
+# k get pods --selector env=dev

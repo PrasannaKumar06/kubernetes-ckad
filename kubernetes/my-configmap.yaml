@@ -1,0 +1,25 @@
+# k create configmap app-config --from-literal=APP_COLOR=pink --from-literal=APP_MODE=prod
+# k create configmap app-config --from-file=app-config.properties
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_COLOR: blue
+  APP_MODE: prod
+
+
+# the below is how to inject the env into a pod
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: configmap-demo-pod
+# spec:
+#   containers:
+#     - name: demo
+#       image: alpine
+#       command: ["sleep", "3600"]
+#         envFrom:
+#           - configMapRef:
+#                name: app-config

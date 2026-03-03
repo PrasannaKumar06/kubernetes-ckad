@@ -1,0 +1,18 @@
+# ReadOnlyMany ReadWriteMany ReadWriteOnce
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-vol1
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  awsElasticBlockStore:
+      volumeID: <volume-ID>
+      fsType: ext4
+  persistentVolumeReclaimPolicy: Retain
+
+#  after deleting a PVC what happens to the PV depends on persistentVolumeReclaimPolicy it can be
+# Recycle(so it can be used by othet PVC its not in use) Delete(It will be deleted and then reused)
+# or Retain(it wont be deleted)

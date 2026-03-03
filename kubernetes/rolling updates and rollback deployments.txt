@@ -1,0 +1,13 @@
+k rollout status deployment/my-deployment
+k rollout history deployment/my-deployment --revison=2 (while applying the deployment use --record=true to view history)
+
+rolling update is the deployment strategy it updates one by one 
+strategy:
+   type: Recreate
+   or
+   type: RollingUpdate
+
+k apply -f deploy.yaml --revision=3
+k set image deployment/my-deployment nginx=nginx1.12.3
+
+k rollout undo deployment my-deployment --to-revison=1

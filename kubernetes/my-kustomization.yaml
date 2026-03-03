@@ -1,0 +1,91 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+commonLabels:
+   app: dev
+
+# kustomize build <dir-path>/ | k apply -f -
+# kustomize build <dir-path>/ | k delete -f -
+# kubectl apply -k <dir-path>/
+# kubectl delete -k <dir-path>/
+
+
+# here just y k apply -f k8s/ (assuming the kust file in that dir) then everything will be applied
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: kustomization
+# resources:
+#   - api/api-dep.yaml
+#   - api/api-svc.yaml
+#   - db/db-dep.yaml
+#   - db/db-svc.yaml
+
+
+# or make a kustomization.yaml file i every subdir with the resorces and in the k8s/ kust file include 
+# resources:
+#   - api/
+#   - db/
+#   - kafka/
+#   - cache/
+
+# transformations:
+# commonLabels, namespace, namePrefix/Suffix, commonAnnotations
+
+# image-transormers
+# images:
+#  - name: nginx
+#    newName: haproxy
+#    newTag: 2.5
+
+
+# we can replace remove and add
+#  this is to remove the label
+# resources:
+#   - mongo-depl.yaml
+#   - api-depl.yaml
+#   - mongo-service.yaml
+# patches:
+#    - target:
+#        kind: Deployment
+#        name: mongo-deployment
+#      patch: |-
+#        - op: remove
+#          path: /spec/template/metadata/labels/org
+
+# this is to remove the container using best method
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: api-deployment
+# spec:
+#   template:
+#     spec:
+#       containers:
+#         - $patch: delete
+#           name: memcached
+
+
+
+# this is how we use overlays
+# resources:
+#   - ../../base
+# labels:
+#   - pairs:
+#       environment: QA
+#     includeSelectors: false
+# patches:
+#    - target:
+#        kind: Deployment
+#        name: api-deployment
+#      patch: |-
+#        - op: replace
+#          path: /spec/template/spec/containers/0/image
+#          value: caddy
+
+
+# its component
+# apiVersion: kustomize.config.k8s.io/v1alpha1
+# kind: Component
+
+# resources:
+#   - redis-deployment.yaml
+#   - redis-service.yaml

@@ -1,0 +1,22 @@
+# k taint nodes node-name key=value:taint-effect
+# key affects are of 3 types NoSchedule (new pods will not be scheduled if no tolerence), PreferNoSchedule (taint effect not guarenteed),
+# NoExecute (if there are pods running with no tolerence to the taint applied to the node then it will be deleted)
+# k taint nodes node1 app=myapp:NoSchedule
+# to untaint kubectl taint nodes node1 key1=value1:NoSchedule-
+
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: my-app-pod 
+  labels: 
+    app: myapp 
+    type: front-end 
+spec: 
+   containers: 
+      - name: nginx-container 
+        image: nginx
+   tolerations:
+      - key: "app"
+        operator: "Equal"
+        value: "myapp"
+        effect: "NoSchedule"

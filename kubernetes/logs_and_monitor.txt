@@ -1,0 +1,5 @@
+k logs pod-name
+k top node
+k top cpu
+
+top is to check the cpu memoory and disk consumption

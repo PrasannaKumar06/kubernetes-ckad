@@ -1,0 +1,16 @@
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: my-app-pod 
+  labels: 
+    app: myapp 
+    type: front-end 
+spec: 
+   containers: 
+      - name: nginx-container 
+        image: nginx
+   nodeSelector:
+      size: Large
+
+# first the node should be labeled
+# k label nodes node01 size=Large

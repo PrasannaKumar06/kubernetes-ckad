@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-ingress
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress
+    spec:
+      containers:
+      - image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
+        name: nginx-ingress-controller
+        args:
+         - /nginx-ingress-controller
+         - --configmap=$(POD_NAMESPACE)/nginx-configuration
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+          - name: http
+            port: 80
+          - name: https
+            port: 443
+
+
+
+
+
+# we need a config map
+
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: nginx-configuration
+
+
+# we also need service
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: nginx-ingress
+# spec: 
+#    type: NodePort 
+#    ports: 
+#       - targetPort: 80 
+#         port: 80 
+#         protocol: TCP
+#         name: http
+#       - targetPort: 443
+#         port: 443
+#         protocol: TCP
+#         name: https
+#    selector: 
+#       name: nginx-ingress
+
+
+# we also need Service account with correct roles roleBindings and clusterRoles
+# k create sa nginx-ingress-serviceaccount

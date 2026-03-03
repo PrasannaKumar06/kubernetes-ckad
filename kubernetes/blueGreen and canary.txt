@@ -1,0 +1,2 @@
+in blue green we use labels with service selectors to route traffic to old es to new set (version=v1)
+in canary same as above but we use extra label and in new rs only 1 pod will be there (version=1 and app=frontend)

@@ -1,0 +1,75 @@
+# k create ingress critical-ingress --rule="<host if required>/pay*=pay-service:8282" --annotation nginx.ingress.kubernetes.io/rewrite-target=/ --annotation nginx.ingress.kubernetes.io/ssl-redirect="false" -n critical-space --dry-run=client -
+# o yaml
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+#     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#   name: critical-ingress
+#   namespace: critical-space
+# spec:
+#   rules:
+#   - http:
+#       paths:
+#       - backend:
+#           service:
+#             name: pay-service
+#             port:
+#               number: 8282
+#         path: /pay
+#         pathType: Prefix
+# status:
+#   loadBalancer: {}
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-wear-watch
+spec:
+  defaultBackend:
+          service:
+            name: wear-service
+            port:
+              number: 80
+  rules:
+    - http:
+        paths:
+          - path: /wear
+            pathType: Prefix
+            backend:
+              service:
+                name: wear-service
+                port:
+                  number: 80
+          - path: /watch
+            pathType: Prefix
+            backend:
+              service:
+                name: watch-service
+                port:
+                  number: 80
+
+
+# rules:
+#   - host: wear.my-online-store.com
+#     http:
+#         paths:
+#           - path: /wear
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: wear-service
+#                 port:
+#                   number: 80
+#   - host: watch.my-online-store.com
+#     http:
+#         paths:
+#           - path: /watch
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: watch-service
+#                 port:
+#                   number: 80
